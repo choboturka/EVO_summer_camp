@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Greetigs!</title>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+</head>
+<body>
+
+<form data-bind="submit: getData">
+    <input data-bind="value: name">
+    <label data-bind="text: greeting"></label>
+    <button type="submit">Submit</button>
+</form>
+
+
+
+<script>
+
+    function greetingVM() {
+        var self = this;
+
+        self.name = ko.observable("Боб");
+
+
+        self.greeting = ko.computed
+
+        self.getData = function () {
+            var data = jso
+            $.post()
+
+
+        }
+
+    }
+
+    ko.applyBindings(greetingVM())
+</script>
+</body>
+</html>
