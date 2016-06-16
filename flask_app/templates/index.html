@@ -3,39 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Greetigs!</title>
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.0.0.js"   integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo="   crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+
 </head>
 <body>
 
-<form data-bind="submit: getData">
-    <input data-bind="value: name">
-    <label data-bind="text: greeting"></label>
-    <button type="submit">Submit</button>
-</form>
 
+<div class=container>
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" data-bind="click: greet">Приветствую!</button>
+      </span>
+      <input type="text" class="form-control" placeholder="Введите имя..." data-bind="value: name">
+    </div>
+    <h4 data-bind="text: greeting"></h4>
+</div>
 
 
 <script>
-
-    function greetingVM() {
+    var VM = function () {
         var self = this;
 
-        self.name = ko.observable("Боб");
+        self.name = ko.observable("Bob");
+        self.greeting = ko.observable();
+        self.greet = function () {
+            $.ajax({
+                data: ko.toJSON({name: self.name}),
+                url: "/greeting",
+                type: "post",
+                contentType: "application/json",
+                success: function (result) {
+                    self.greeting(result)
+                }
+            });
+        };
+    };
 
-
-        self.greeting = ko.computed
-
-        self.getData = function () {
-            var data = jso
-            $.post()
-
-
-        }
-
-    }
-
-    ko.applyBindings(greetingVM())
+    ko.applyBindings(VM);
 </script>
+
+
+
 </body>
 </html>

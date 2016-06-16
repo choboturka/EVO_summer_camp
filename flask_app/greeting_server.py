@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, url_for
+import json
 from random import choice
 from collections import defaultdict
 import os
@@ -6,7 +7,7 @@ app = Flask(__name__)
 
 
 names = defaultdict(list)
-path = os.path.abspath(__file__) + "/adjectives.txt"
+path = os.path.dirname(__file__) + "/adjectives.txt"
 with open(path, "r") as f:
     adjectives = [line.strip() for line in f]
 
@@ -17,13 +18,17 @@ def index():
 
 @app.route("/greeting", methods=["POST"])
 def greeting():
-    name = request.data["name"]
+
+    json = request.json
+    name = json["name"]
+    # name = request.data["name"]
     if name not in names:
         names[name] = choice(adjectives)
 
-    greeting = "Рад тебя видеть снова, " + names[name] + name
-    return jsonify({"name":name, "greeting":greeting})
+    greeting = "Рад тебя видеть снова, " + names[name] + " " + name + "!"
+    # return jsonify({"name":name, "greeting":greeting})
+    return greeting
 
 if __name__ == "__main__":
-    app.run
+    app.run(debug=True)
 
